@@ -1,0 +1,279 @@
+{% extends 'main.html' %}
+{% block head %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" language="javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/component1.css" />
+    <script src="../static/js/modernizr-2.6.2.min.js"></script>
+    <title>COVID-19 Sentiment Prediction</title>
+
+    <style>
+        .table {
+            padding-top: -40px;
+            margin-right: 600px;
+        }
+
+        th,
+        td {
+            border: 0.5px solid black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+        }
+
+
+        .pred {
+            padding-left: 850px;
+            margin-top: -920px;
+        }
+
+        .button {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            background-color: blueviolet;
+            color: azure;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-left: 860px;
+            margin-top: 35px;
+            font-weight: bolder;
+            font-size: larger;
+        }
+
+        .atext {
+            font-size: larger;
+            cursor: pointer;
+            margin-left: 600px;
+            padding-left: 15px;
+            padding-right: 15px;
+            background-color: blueviolet;
+            color: azure;
+        }
+
+        main {
+            min-width: 300px;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        p {
+            font-size: 1em;
+            line-height: 1.75em;
+            border-top: 3px solid;
+            border-image: linear-gradient(to right, #743ad5 0%, #d53a9d 100%);
+            border-image-slice: 1;
+            border-width: 3px;
+            margin: 0;
+            padding: 40px;
+            counter-increment: section;
+            position: relative;
+        }
+
+        before {
+            font-size: 1em;
+            line-height: 1.75em;
+            border-top: 3px solid;
+            border-image: linear-gradient(to right, #743ad5 0%, #d53a9d 100%);
+            border-image-slice: 1;
+            border-width: 3px;
+            margin: 0;
+            padding: 40px;
+            counter-increment: section;
+            position: relative;
+            content: counter(section);
+            position: absolute;
+            border-radius: 50%;
+            padding: 10px;
+            height: 1.25em;
+            width: 1.25em;
+            text-align: center;
+            line-height: 1.25em;
+            font-size: 1em;
+        }
+
+
+        p:nth-child(odd) {
+            border-right: 3px solid;
+            padding-left: 0;
+        }
+
+        before {
+            border-right: 3px solid;
+            padding-left: 0;
+            left: 100%;
+            margin-left: -20px;
+        }
+
+
+        p:nth-child(even) {
+            border-left: 3px solid;
+            padding-right: 0;
+        }
+
+        before {
+            border-left: 3px solid;
+            padding-right: 0;
+            right: 100%;
+            margin-right: -20px;
+        }
+
+        p:first-child {
+            border-top: 0;
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+        }
+
+        p:last-child {
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    </style>
+</head>
+
+<body>
+    {% endblock %}
+    {% block all %}
+    <h1 style="text-align: center; font-family:Georgia, 'Times New Roman', Times, serif; font-weight:bolder; padding-top:20px; background-image: linear-gradient(to left, rgb(184, 48, 184), rgb(59, 9, 95),blue); -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;">
+        Sentiment
+        Prediction of COVID-19 Tweets</h1>
+    <br>
+    <br>
+    <br>
+    <div style="padding-left: 30px;">
+        {{var[3]|safe}}
+    </div>
+    <br>
+    <br>
+    <main>
+        <p style=" background-image: linear-gradient(to left, rgb(184, 48, 184), rgb(59, 9, 95),blue);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;">For using any Machine Learning technique we split main data into train and validation part, where we train the model on training part and made the prediction on validation part. First one is train data, here it is used to train Stacked LSTM(Deep Learning Technique) model that is used to predict future sentiments of people. This time we predict the sentiments for next 1 week. </p>
+        <p style=" background-image: linear-gradient(to left, rgb(184, 48, 184), rgb(59, 9, 95),blue);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;">Next is Validation part we create this part mainly to check the accuracy of the model i.e. how well our model predicts the actual values.</p>
+        <p style=" background-image: linear-gradient(to left, rgb(184, 48, 184), rgb(59, 9, 95),blue);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;">Moving on further we have Predictions set these are the values that we predicted from Validation part and as it is clear from plots itself that the values for both the Predictions and Validation part are almost similar this indicates that our model achieve good accuracy </p>
+        <p style=" background-image: linear-gradient(to left, rgb(184, 48, 184), rgb(59, 9, 95),blue);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;">Now the main game starts from here that is prety much useful. The final step that is of prediction of future sentiments of next 7 days. Now user would get rough idea about the sentiments of people in advance. NOTE:- THIS IS JUST A PREDICTIVE MODEL ACTUAL SENTIMENTS MAY NOT BE THE SAME.</p>
+    </main>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <form action="{{url_for('prediction2')}}" method="POST">
+        <button name="fbutton" class="atext" type="submit" value="Next"><b>More Tweets</b></button>
+    </form>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>Date</th>
+            <th>Live Tweet</th>
+            <th>Sentiment Score</th>
+        </tr>
+        <tr>
+            <td>{{var[0][0]}}</td>
+            <td>{{var[1][0]}}</td>
+            <td>{{var[2][0]}}</td>
+        </tr>
+        <tr>
+            <td>{{var[0][1]}}</td>
+            <td>{{var[1][1]}}</td>
+            <td>{{var[2][1]}}</td>
+        </tr>
+        <tr>
+            <td>{{var[0][2]}}</td>
+            <td>{{var[1][2]}}</td>
+            <td>{{var[2][2]}}</td>
+        </tr>
+        <tr>
+            <td>{{var[0][3]}}</td>
+            <td>{{var[1][3]}}</td>
+            <td>{{var[2][3]}}</td>
+        </tr>
+        <tr>
+            <td>{{var[0][4]}}</td>
+            <td>{{var[1][4]}}</td>
+            <td>{{var[2][4]}}</td>
+        </tr>
+        <tr>
+            <td>{{var[0][5]}}</td>
+            <td>{{var[1][5]}}</td>
+            <td>{{var[2][5]}}</td>
+        </tr>
+        <tr>
+            <td>{{var[0][6]}}</td>
+            <td>{{var[1][6]}}</td>
+            <td>{{var[2][6]}}</td>
+        </tr>
+        <tr>
+            <td>{{var[0][7]}}</td>
+            <td>{{var[1][7]}}</td>
+            <td>{{var[2][7]}}</td>
+        </tr>
+        <tr>
+            <td>{{var[0][8]}}</td>
+            <td>{{var[1][8]}}</td>
+            <td>{{var[2][8]}}</td>
+        </tr>
+        <tr>
+            <td>{{var[0][9]}}</td>
+            <td>{{var[1][9]}}</td>
+            <td>{{var[2][9]}}</td>
+        </tr>
+
+    </table>
+    <br>
+    <br>
+    <br>
+    <div class="pred">
+        <form action="{{url_for('prediction')}}" method="POST">
+            <br />
+            <h2 style="padding-left: 30px; background-image: linear-gradient(to left, rgb(184, 48, 184), rgb(59, 9, 95),blue); -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;">Enter Tweet For Sentiment Analysis</h2>
+            <br />
+            <textarea style="padding-top:10px; padding-left:10px" name="message" rows="20" cols="60"
+                required="required"></textarea>
+            <br />
+            <br />
+            <br />
+            <button class="button" type="submit" value="predict"><b>Predict</b></button>
+        </form>
+    </div>
+    <div class="result">
+        {{prediction}}
+    </div>
+    <br>
+    <img style=" margin-left:760px; height:50%; width:40%; border: 2px solid #ddd;
+  border-radius: 2px; " src="../static/images/word2.jpg" alt="">
+    <br>
+    <br>
+    {% endblock %}
