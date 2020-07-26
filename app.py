@@ -102,10 +102,10 @@ def home():
 def four(): 
     return render_template('fphase.html', ls1=ls1, var=[list11,list22,list33, pred_plot], ls=ls)
 
-consumer_key = 'eeSnutOqqknGGGqiso8DPEfdn'
-consumer_secret = 'uqKKBzpp96NJTBwEBge9wmsVKEJBdoSuMOmsaQiUphikReuJaH'
-access_token = '1276097905363828736-RQfCc3FuSvhdwyYhjpoDfO7QH6Q4gB'
-access_token_secret = 'nL8jdSU1j0cuRNiGGum8uTaLrq0blGEwqI8kmfwzAMSsJ'
+consumer_key = 
+consumer_secret = 
+access_token = 
+access_token_secret = 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
